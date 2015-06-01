@@ -12,6 +12,7 @@ struct Capacitor {
 
 	// Voltage constants
 	double ratedVoltage;
+	// Max voltage could be statistically modeled
 	double maxVoltage;
 	
 	// Resistance constants
