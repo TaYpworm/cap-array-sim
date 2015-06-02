@@ -1,0 +1,3 @@
+#define CapArraySim_VERSION_MAJOR @CapArraySim_VERSION_MAJOR@
+#define CapArraySim_VERSION_MINOR @CapArraySim_VERSION_MINOR@
+#define CapArraySim_VERSION_PATCH @CapArraySim_VERSION_PATCH@

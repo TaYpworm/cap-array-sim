@@ -1,5 +1,5 @@
-#ifndef __capacitor_hpp__
-#define __capacitor_hpp__
+#ifndef __CAPACITOR_HPP__
+#define __CAPACITOR_HPP__
 
 struct Capacitor {
 	// Capacitance constants

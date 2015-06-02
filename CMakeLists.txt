@@ -12,8 +12,8 @@ set (PROJECT_INCLUDE_DIR "./include")
 
 # Configure a header file for cmake settings
 configure_file (
-	"${PROJECT_INCLUDE_DIR}/CapArraySimConfig.hpp.in"
-	"${PROJECT_INCLUDE_DIR}/CapArraySimConfig.hpp"
+	"${PROJECT_INCLUDE_DIR}/config.hpp.in"
+	"${PROJECT_INCLUDE_DIR}/config.hpp"
 )
 
 # Compiler arguments
@@ -25,7 +25,7 @@ endif ()
 include_directories(${PROJECT_INCLUDE_DIR})
 
 # Source
-set (SOURCES "${PROJECT_SOURCE_DIR}/capacitor.cc" "${PROJECT_SOURCE_DIR}/cap_array_sim.cc")
+set (SOURCES "${PROJECT_SOURCE_DIR}/capacitor.cc" "${PROJECT_SOURCE_DIR}/cap_array_sim.cc" "${PROJECT_SOURCE_DIR}/terminal.cc" "${PROJECT_SOURCE_DIR}/connection.cc")
 
 # Libraries
 #set (EXTRA_LIBS entityx)
