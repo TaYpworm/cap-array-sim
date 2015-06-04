@@ -25,11 +25,11 @@ endif ()
 include_directories(${PROJECT_INCLUDE_DIR})
 
 # Source
-set (SOURCES "${PROJECT_SOURCE_DIR}/capacitor.cc" "${PROJECT_SOURCE_DIR}/cap_array_sim.cc" "${PROJECT_SOURCE_DIR}/terminal.cc" "${PROJECT_SOURCE_DIR}/connection.cc")
+set (SOURCES ${PROJECT_SOURCE_DIR}/capacitor.cc ${PROJECT_SOURCE_DIR}/cap_array_sim.cc ${PROJECT_SOURCE_DIR}/terminal.cc ${PROJECT_SOURCE_DIR}/connection.cc ${PROJECT_SOURCE_DIR}/arraysystem.cc ${PROJECT_SOURCE_DIR}/sourcesystem.cc ${PROJECT_SOURCE_DIR}/drainsystem.cc ${PROJECT_SOURCE_DIR}/balancersystem.cc)
 
 # Libraries
-#set (EXTRA_LIBS entityx)
+set (EXTRA_LIBS entityx)
 
 # Executable
 add_executable (CapArraySim ${SOURCES})
-#target_link_libraries (CapArraySim ${EXTRA_LIBS})
+target_link_libraries (CapArraySim ${EXTRA_LIBS})
