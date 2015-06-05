@@ -21,12 +21,27 @@ struct Capacitor {
 	
 	// Variables
 	double esr;
+	// Capacitance varies non-linearly with voltage
 	double capacitance;
+	double maxCapacitance;
 	double voltage;
+	// Coefficient that adds non-linear effects due to diffused layer
+	double diffusedEffectsCoef;
+	double energy;
+
+	// current < 0 = charge
+	// current > 0 = discharge
+	virtual void update(double current, double time) = 0;
+	virtual void calcCapacitance() = 0;
+	virtual void calcEnergy() = 0;
 };
 
 struct MaxwellK23400F : public Capacitor{
 	MaxwellK23400F(double startingVoltage = 0);
+	void update(double current, double time);
+	void calcCapacitance();
+	void calcEnergy();
 };
+
 
 #endif
