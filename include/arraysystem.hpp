@@ -3,12 +3,21 @@
 
 #include <entityx/entityx.h>
 
-class ArraySystem : public entityx::System<ArraySystem> {
+class ArraySystem 
+	: public entityx::System<ArraySystem> 
+{
 public:
-	explicit ArraySystem();
+	explicit ArraySystem(entityx::Entity &start, entityx::Entity &end);
 	void update(entityx::EntityManager &es, 
 		entityx::EventManager &events, 
 		entityx::TimeDelta dt) override;
+
+private:
+	entityx::Entity startCap;
+	entityx::Entity endCap;
+	double capacitance;
+
+	void calcCapacitance();
 };
 
 #endif

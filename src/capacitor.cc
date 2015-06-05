@@ -5,11 +5,13 @@
 #include <sstream>
 #include <cmath>
 
-MaxwellK23400F::MaxwellK23400F(double startingVoltage) {
+MaxwellK23400F::MaxwellK23400F(double startingVoltage) 
+{
 	// Set voltage
 	ratedVoltage = 2.85; // Volts
 	maxVoltage = 3.0; // Volts
-	if (startingVoltage < 0 || startingVoltage > maxVoltage) {
+	if (startingVoltage < 0 || startingVoltage > maxVoltage) 
+	{
 		std::ostringstream message;
 		message << "Starting voltage is out of range 0.." << maxVoltage << "V.";
 		throw std::out_of_range (message.str());
@@ -59,9 +61,11 @@ MaxwellK23400F::MaxwellK23400F(double startingVoltage) {
 	calcEnergy();
 }
 
+// Constant current charge/discharge model.
 // current < 0 = charge
 // current > 0 = discharge
-void MaxwellK23400F::update(double current, double time) {
+void MaxwellK23400F::update(double current, double time) 
+{
 	// Update voltage
 	voltage = sqrt((minCapacitance * minCapacitance) / (4 * diffusedEffectsCoef * diffusedEffectsCoef) + \
 		(1 / diffusedEffectsCoef) * (voltage * minCapacitance + voltage * voltage * diffusedEffectsCoef - current * time)) - \
@@ -72,13 +76,15 @@ void MaxwellK23400F::update(double current, double time) {
 	calcEnergy();
 }
 
-void MaxwellK23400F::calcCapacitance() {
+void MaxwellK23400F::calcCapacitance() 
+{
 	// C(u_c) = C_0 + k_c * u_c
 	// where k_c = diffused effects coefficient
 	capacitance = minCapacitance + diffusedEffectsCoef * voltage; // Farads
 }
 
-void MaxwellK23400F::calcEnergy() {
+void MaxwellK23400F::calcEnergy() 
+{
 	// "Energetic" capacitane = C_e(u_c) = C_0 + 4/3 * k_c * u_c
 	energy = 0.5 * (minCapacitance + 4 / 3 * diffusedEffectsCoef * voltage) * voltage * voltage; // Joules
 }

@@ -1,5 +1,6 @@
 #include "connection.hpp"
 
-CapConnection::CapConnection(Capacitor *nextCap) {
-	next = nextCap;
+Connection::Connection(entityx::Entity *nextEnt) 
+{
+	next = nextEnt;
 }

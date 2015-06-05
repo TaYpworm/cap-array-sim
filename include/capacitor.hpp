@@ -1,7 +1,8 @@
 #ifndef __CAPACITOR_HPP__
 #define __CAPACITOR_HPP__
 
-struct Capacitor {
+struct Capacitor 
+{
 	// Capacitance constants
 	double minCapacitance;
 	double meanCapacitance;
@@ -36,7 +37,9 @@ struct Capacitor {
 	virtual void calcEnergy() = 0;
 };
 
-struct MaxwellK23400F : public Capacitor{
+struct MaxwellK23400F 
+	: public Capacitor
+{
 	MaxwellK23400F(double startingVoltage = 0);
 	void update(double current, double time);
 	void calcCapacitance();

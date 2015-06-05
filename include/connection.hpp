@@ -1,12 +1,13 @@
 #ifndef __CONNECTION_HPP__
 #define __CONNECTION_HPP__
 
-#include "capacitor.hpp"
+#include <entityx/entityx.h>
 
-struct CapConnection {
-	Capacitor *next;
+struct Connection 
+{
+	entityx::Entity *next;
 
-	CapConnection(Capacitor *nextCap);
+	Connection(entityx::Entity *nextEnt);
 };
 
 #endif
