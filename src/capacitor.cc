@@ -64,16 +64,25 @@ MaxwellK23400F::MaxwellK23400F(double startingVoltage)
 // Constant current charge/discharge model.
 // current < 0 = charge
 // current > 0 = discharge
-void MaxwellK23400F::update(double current, double time) 
+void MaxwellK23400F::update(const double current, const double time) 
 {
-	// Update voltage
-	voltage = sqrt((minCapacitance * minCapacitance) / (4 * diffusedEffectsCoef * diffusedEffectsCoef) + \
-		(1 / diffusedEffectsCoef) * (voltage * minCapacitance + voltage * voltage * diffusedEffectsCoef - current * time)) - \
-		minCapacitance / (2 * diffusedEffectsCoef); // Volts
-
-	// Update capacitance and energy
+	calcVoltage(current, time);
 	calcCapacitance();
 	calcEnergy();
+}
+
+// current < 0 = charge
+// current > 0 = discharge
+void MaxwellK23400F::calcVoltage(const double current, const double time)
+{
+	voltage = sqrt((minCapacitance * minCapacitance) / \
+		(4 * diffusedEffectsCoef * diffusedEffectsCoef) + \
+		(1 / diffusedEffectsCoef) * \
+		(voltage * minCapacitance + \
+		voltage * voltage * diffusedEffectsCoef - current * time)) - \
+		minCapacitance / (2 * diffusedEffectsCoef); // Volts
+
+	// Capacitor voltage can become negative, but should not be done for safety.
 }
 
 void MaxwellK23400F::calcCapacitance() 
@@ -85,6 +94,6 @@ void MaxwellK23400F::calcCapacitance()
 
 void MaxwellK23400F::calcEnergy() 
 {
-	// "Energetic" capacitane = C_e(u_c) = C_0 + 4/3 * k_c * u_c
+	// "Energetic" capacitance = C_e(u_c) = C_0 + 4/3 * k_c * u_c
 	energy = 0.5 * (minCapacitance + 4 / 3 * diffusedEffectsCoef * voltage) * voltage * voltage; // Joules
 }

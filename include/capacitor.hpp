@@ -32,7 +32,10 @@ struct Capacitor
 
 	// current < 0 = charge
 	// current > 0 = discharge
-	virtual void update(double current, double time) = 0;
+	virtual void update(const double current, const double time) = 0;
+
+private:
+	virtual void calcVoltage(const double current, const double time) = 0;
 	virtual void calcCapacitance() = 0;
 	virtual void calcEnergy() = 0;
 };
@@ -41,7 +44,10 @@ struct MaxwellK23400F
 	: public Capacitor
 {
 	MaxwellK23400F(double startingVoltage = 0);
-	void update(double current, double time);
+	void update(const double current, const double time);
+
+private:
+	void calcVoltage(const double current, const double time);
 	void calcCapacitance();
 	void calcEnergy();
 };

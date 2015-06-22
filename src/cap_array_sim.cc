@@ -1,6 +1,5 @@
 #include "capacitor.hpp"
 #include "config.hpp"
-#include "connection.hpp"
 #include <iostream>
 #include <stdexcept>
 

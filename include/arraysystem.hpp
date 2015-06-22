@@ -3,11 +3,11 @@
 
 #include <entityx/entityx.h>
 
-class ArraySystem 
-	: public entityx::System<ArraySystem> 
+class CapArraySystem 
+	: public entityx::System<CapArraySystem> 
 {
 public:
-	explicit ArraySystem(entityx::Entity &start, entityx::Entity &end);
+	explicit CapArraySystem();
 	void update(entityx::EntityManager &es, 
 		entityx::EventManager &events, 
 		entityx::TimeDelta dt) override;
