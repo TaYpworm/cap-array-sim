@@ -25,6 +25,13 @@ class Maxwellk23400F(object):
 		self.esr = 0.00028
 
 
+	# power < 0 = charge
+	# power > 0 = discharge
+	def current_from_power(self, power, time):
+		return -(power / self.voltage) * np.sqrt((self.min_capacitance * self.voltage * self.voltage) / (self.min_capacitance * self.voltage * self.voltage - 2 * power * time))
+
+	# current < 0 = charge
+	# current > 0 = discharge
 	def update(self, current, time):
 		self.calc_voltage(current, time)
 		self.calc_capacitance()
@@ -32,9 +39,7 @@ class Maxwellk23400F(object):
 
 	def calc_capacitance(self):
 		self.capacitance = self.min_capacitance + self.diffused_effects_coef * self.voltage # Farads
-
-	# current < 0 = charge
-	# current > 0 = discharge
+	
 	def calc_voltage(self, current, time):
 		self.voltage = np.sqrt((self.min_capacitance * self.min_capacitance) / (4 * self.diffused_effects_coef * self.diffused_effects_coef) + (self.voltage * self.min_capacitance + self.voltage * self.voltage * self.diffused_effects_coef - current * time) / self.diffused_effects_coef) - self.min_capacitance / (2 * self.diffused_effects_coef) # Volts
 
@@ -43,6 +48,7 @@ class Maxwellk23400F(object):
 
 def main(args):
 	cap = Maxwellk23400F()
+	cap.voltage = 1
 	sec = 0.0
 	# Current passed as float in command line args
 	# Negative current charges capacitor
@@ -50,12 +56,19 @@ def main(args):
 	current = -float(args[1])
 	time_delta = 0.01
 	values = []
+	current_values = []
 	while cap.voltage < cap.rated_voltage:
 		sec += time_delta
-		cap.update(current, time_delta)
-		print cap.voltage
+		current = cap.current_from_power(-500, time_delta)
+		cap.update(-current, time_delta)
+		print current, cap.voltage
+		#cap.update(current, time_delta)
 		values.append((sec, cap.voltage, cap.capacitance, cap.energy))
+		#current_values.append(cap.current_from_power(-2500, time_delta))
 	
+	#c_m = np.matrix(current_values)
+	#print c_m
+	#print np.max(c_m)
 	m = np.matrix(values)
 
 	# Print max values
@@ -65,6 +78,7 @@ def main(args):
 	print 'max energy = ', np.max(m[:, 3])
 
 	# Plot voltage
+	#pl.plot(m[:, 0], c_m.transpose())
 	pl.plot(m[:, 0], m[:, 1])
 	pl.show()
 
