@@ -1,6 +1,8 @@
 #ifndef __CAPACITOR_HPP__
 #define __CAPACITOR_HPP__
 
+#include <cmath>
+
 struct Capacitor 
 {
 	// Capacitance constants
@@ -29,28 +31,50 @@ struct Capacitor
 	// Coefficient that adds non-linear effects due to diffused layer
 	double diffusedEffectsCoef;
 	double energy;
-
-	// current < 0 = charge
-	// current > 0 = discharge
-	virtual void update(const double current, const double time) = 0;
-
-private:
-	virtual void calcVoltage(const double current, const double time) = 0;
-	virtual void calcCapacitance() = 0;
-	virtual void calcEnergy() = 0;
 };
 
 struct MaxwellK23400F 
 	: public Capacitor
 {
 	MaxwellK23400F(double startingVoltage = 0);
-	void update(const double current, const double time);
-
-private:
-	void calcVoltage(const double current, const double time);
-	void calcCapacitance();
-	void calcEnergy();
 };
 
+// power < 0 = charge
+// power > 0 = discharge
+// return < 0 = charge
+// return > 0 = discharge
+inline double calcCurrentFromPower(const Capacitor& cap, const double power, const double time)
+{
+	return -(power / cap.voltage) * sqrt(cap.minCapacitance * cap.voltage * cap.voltage) / \
+		(cap.minCapacitance * cap.voltage * cap.voltage - 2 * power * time);
+}
+
+// current < 0 = charge
+// current > 0 = discharge
+inline double calcVoltageDelta(const Capacitor& cap, const double current, const double time)
+{
+	return sqrt((cap.minCapacitance * cap.minCapacitance) / \
+		(4 * cap.diffusedEffectsCoef * cap.diffusedEffectsCoef) + \
+		(1 / cap.diffusedEffectsCoef) * \
+		(cap.voltage * cap.minCapacitance + \
+		cap.voltage * cap.voltage * cap.diffusedEffectsCoef - current * time)) - \
+		cap.minCapacitance / (2 * cap.diffusedEffectsCoef); // Volts
+
+	// Capacitor voltage can become negative, but should not be done for safety.
+}
+
+inline double calcCapacitance(const Capacitor& cap)
+{
+	// C(u_c) = C_0 + k_c * u_c
+	// where k_c = diffused effects coefficient
+	return cap.minCapacitance + cap.diffusedEffectsCoef * cap.voltage; // Farads
+}
+
+inline double calcEnergy(const Capacitor& cap)
+{
+	// "Energetic" capacitance = C_e(u_c) = C_0 + 4/3 * k_c * u_c
+	return 0.5 * (cap.minCapacitance + 4 / 3 * cap.diffusedEffectsCoef * cap.voltage) * \
+		cap.voltage * cap.voltage; // Joules
+}
 
 #endif

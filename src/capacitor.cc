@@ -42,7 +42,7 @@ MaxwellK23400F::MaxwellK23400F(double startingVoltage)
 	// C_0 = C(max_volt) - k_c * max_volt
 	// where k_c = diffused effects coefficient
 	minCapacitance = maxCapacitance - diffusedEffectsCoef * maxVoltage;
-	calcCapacitance();
+	calcCapacitance(*this);
 
 	// Set current
 	maxCurrent = 2000.0; // Amp
@@ -58,42 +58,5 @@ MaxwellK23400F::MaxwellK23400F(double startingVoltage)
 	esr = esrDist(generator); // Ohms
 
 	// Set energy
-	calcEnergy();
-}
-
-// Constant current charge/discharge model.
-// current < 0 = charge
-// current > 0 = discharge
-void MaxwellK23400F::update(const double current, const double time) 
-{
-	calcVoltage(current, time);
-	calcCapacitance();
-	calcEnergy();
-}
-
-// current < 0 = charge
-// current > 0 = discharge
-void MaxwellK23400F::calcVoltage(const double current, const double time)
-{
-	voltage = sqrt((minCapacitance * minCapacitance) / \
-		(4 * diffusedEffectsCoef * diffusedEffectsCoef) + \
-		(1 / diffusedEffectsCoef) * \
-		(voltage * minCapacitance + \
-		voltage * voltage * diffusedEffectsCoef - current * time)) - \
-		minCapacitance / (2 * diffusedEffectsCoef); // Volts
-
-	// Capacitor voltage can become negative, but should not be done for safety.
-}
-
-void MaxwellK23400F::calcCapacitance() 
-{
-	// C(u_c) = C_0 + k_c * u_c
-	// where k_c = diffused effects coefficient
-	capacitance = minCapacitance + diffusedEffectsCoef * voltage; // Farads
-}
-
-void MaxwellK23400F::calcEnergy() 
-{
-	// "Energetic" capacitance = C_e(u_c) = C_0 + 4/3 * k_c * u_c
-	energy = 0.5 * (minCapacitance + 4 / 3 * diffusedEffectsCoef * voltage) * voltage * voltage; // Joules
+	calcEnergy(*this);
 }

@@ -31,8 +31,7 @@ set (SOURCES ${PROJECT_SOURCE_DIR}/capacitor.cc
 	${PROJECT_SOURCE_DIR}/arraysystem.cc 
 	${PROJECT_SOURCE_DIR}/sourcesystem.cc 
 	${PROJECT_SOURCE_DIR}/drainsystem.cc 
-	${PROJECT_SOURCE_DIR}/balancersystem.cc
-	${PROJECT_SOURCE_DIR}/source.cc)
+	${PROJECT_SOURCE_DIR}/balancersystem.cc)
 
 # Libraries
 set (EXTRA_LIBS entityx)

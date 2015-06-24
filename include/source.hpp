@@ -5,8 +5,11 @@ struct Source
 {
 	double voltage;
 	double current;
-
-	double calcPower();
 };
+
+inline double calcPower(const Source& source)
+{
+	return source.voltage * source.current;
+}
 
 #endif

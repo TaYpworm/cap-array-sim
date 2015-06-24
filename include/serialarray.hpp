@@ -6,7 +6,7 @@
 
 struct SerialArray
 {
-	std::Vector<entityx::Entity> entities;
+	std::vector<entityx::Entity> entities;
 };
 
 #endif
