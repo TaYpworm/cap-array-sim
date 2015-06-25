@@ -1,5 +1,5 @@
-#include "source.hpp"
 #include <cassert>
+#include "Source.hpp"
 
 Source::Source(entityx::Entity::Id inConnectionId)
 {

@@ -1,8 +1,8 @@
-#ifndef __ARRAYSYSTEM_HPP__
-#define __ARRAYSYSTEM_HPP__
+#ifndef __CAPARRAYSYSTEM_HPP__
+#define __CAPARRAYSYSTEM_HPP__
 
-#include "serialarray.hpp"
 #include <entityx/entityx.h>
+#include "SerialArray.hpp"
 
 class CapArraySystem 
 	: public entityx::System<CapArraySystem> 

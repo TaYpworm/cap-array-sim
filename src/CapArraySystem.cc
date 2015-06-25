@@ -1,10 +1,9 @@
-#include "arraysystem.hpp"
-#include "caparray.hpp"
-#include "capacitor.hpp"
-#include "helpers.hpp"
-#include "serialarray.hpp"
-#include <stdexcept>
 #include <cassert>
+#include <stdexcept>
+#include "Capacitor.hpp"
+#include "CapArray.hpp"
+#include "CapArraySystem.hpp"
+#include "SerialArray.hpp"
 
 CapArraySystem::CapArraySystem(entityx::Entity::Id arrayEntId) 
 {

@@ -1,5 +1,6 @@
-#include "helpers.hpp"
-#include "capacitor.hpp"
+#include "Capacitor.hpp"
+#include "Helpers.hpp"
+#include "SerialArray.hpp"
 
 bool hasCap(entityx::EntityManager &es, entityx::Entity::Id id)
 {

@@ -1,5 +1,5 @@
-#include "circuit.hpp"
 #include <entityx/entityx.h>
+#include "Circuit.hpp"
 
 Circuit::Circuit()
 {

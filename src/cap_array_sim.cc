@@ -1,7 +1,7 @@
-#include "capacitor.hpp"
-#include "config.hpp"
 #include <iostream>
 #include <stdexcept>
+#include "Capacitor.hpp"
+#include "Config.hpp"
 
 using namespace std;
 

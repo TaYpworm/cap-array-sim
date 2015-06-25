@@ -1,9 +1,9 @@
-#include "capacitor.hpp"
 #include <chrono>
-#include <random>
-#include <stdexcept>
-#include <sstream>
 #include <cmath>
+#include <random>
+#include <sstream>
+#include <stdexcept>
+#include "Capacitor.hpp"
 
 MaxwellK23400F::MaxwellK23400F(double startingVoltage) 
 {

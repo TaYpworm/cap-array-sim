@@ -12,8 +12,8 @@ set (PROJECT_INCLUDE_DIR "./include")
 
 # Configure a header file for cmake settings
 configure_file (
-	"${PROJECT_INCLUDE_DIR}/config.hpp.in"
-	"${PROJECT_INCLUDE_DIR}/config.hpp"
+	"${PROJECT_INCLUDE_DIR}/Config.hpp.in"
+	"${PROJECT_INCLUDE_DIR}/Config.hpp"
 )
 
 # Compiler arguments
@@ -25,15 +25,15 @@ endif ()
 include_directories(${PROJECT_INCLUDE_DIR})
 
 # Source
-set (SOURCES ${PROJECT_SOURCE_DIR}/capacitor.cc 
+set (SOURCES ${PROJECT_SOURCE_DIR}/Capacitor.cc 
 	${PROJECT_SOURCE_DIR}/cap_array_sim.cc 
-	${PROJECT_SOURCE_DIR}/terminal.cc 
-	${PROJECT_SOURCE_DIR}/arraysystem.cc 
-	${PROJECT_SOURCE_DIR}/sourcesystem.cc 
-	${PROJECT_SOURCE_DIR}/drainsystem.cc 
-	${PROJECT_SOURCE_DIR}/balancersystem.cc
-	${PROJECT_SOURCE_DIR}/helpers.cc
-	${PROJECT_SOURCE_DIR}/source.cc)
+	${PROJECT_SOURCE_DIR}/Terminals.cc 
+	${PROJECT_SOURCE_DIR}/CapArraySystem.cc 
+	${PROJECT_SOURCE_DIR}/ConstCurrentSourceSystem.cc 
+	${PROJECT_SOURCE_DIR}/DrainSystem.cc 
+	${PROJECT_SOURCE_DIR}/BalancerSystem.cc
+	${PROJECT_SOURCE_DIR}/Helpers.cc
+	${PROJECT_SOURCE_DIR}/Source.cc)
 
 # Libraries
 set (EXTRA_LIBS entityx)

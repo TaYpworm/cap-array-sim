@@ -1,5 +1,6 @@
-#include "sourcesystem.hpp"
 #include <cassert>
+#include "Capacitor.hpp"
+#include "ConstCurrentSourceSystem.hpp"
 
 ConstCurrentSourceSystem::ConstCurrentSourceSystem(entityx::Entity::Id sourceId) 
 {

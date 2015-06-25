@@ -1,5 +1,5 @@
-#ifndef __SOURCESYSTEM_HPP__
-#define __SOURCESYSTEM_HPP__
+#ifndef __CONSTCURRENTSOURCESYSTEM_HPP__
+#define __CONSTCURRENTSOURCESYSTEM_HPP__
 
 #include <entityx/entityx.h>
 
