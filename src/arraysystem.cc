@@ -6,38 +6,37 @@
 #include <stdexcept>
 #include <cassert>
 
-CapArraySystem::CapArraySystem(entityx::Entity& arrayEnt) 
+CapArraySystem::CapArraySystem(entityx::Entity::Id arrayEntId) 
 {
-	assert(arrayEnt);
-	assert(arrayEnt.has_component<CapArray>() && arrayEnt.has_component<SerialArray>());
-	assert(hasCap(arrayEnt.component<SerialArray>()));
+	assert(arrayEntId == entityx::Entity::INVALID);
 
-	_arrayEnt = &arrayEnt;
-}
-
-void CapArraySystem::update(entityx::EntityManager &es,
-	entityx::EventManager &events,
-	entityx::TimeDelta dt) 
-{
-
+	_id = arrayEntId;
 }
 
 // Updates capacitor array component variables
 // Cap array voltage and capacitance change during charge/discharge
-void CapArraySystem::updateCapArray()
+void CapArraySystem::update(entityx::EntityManager &es,
+	entityx::EventManager &events,
+	entityx::TimeDelta dt) 
 {
-	entityx::ComponentHandle<CapArray> capArray = _arrayEnt->component<CapArray>();
-	entityx::ComponentHandle<SerialArray> serialArray = _arrayEnt->component<SerialArray>();
+	entityx::Entity arrayEnt = es.get(_id);
+	entityx::ComponentHandle<CapArray> capArray = arrayEnt.component<CapArray>();
+	entityx::ComponentHandle<SerialArray> serialArray = arrayEnt.component<SerialArray>();
 
 	// Calc cap array components
+	int numCaps = 0;
+	double esr = 0.0;
 	double eCapacitance = 0.0;
 	double voltage = 0.0;
 	entityx::ComponentHandle<Capacitor> cap;
-	for (auto ent : serialArray->entities)
+	// Entities of SerialArray may not contain capacitors
+	for (auto entId : serialArray->entityIds)
 	{
-		cap = ent.component<Capacitor>();
+		cap = es.get(entId).component<Capacitor>();
 		if (cap)
 		{
+			numCaps++;
+			esr += cap->esr;
 			// Equivalent capacitance of series-connected capacitors
 			eCapacitance += 1 / cap->capacitance; 
 			voltage += cap->voltage;
@@ -45,6 +44,8 @@ void CapArraySystem::updateCapArray()
 	}
 
 	// Update CapArray component variables
+	capArray->numCaps = numCaps;
+	capArray->esr = esr;
 	capArray->eCapacitance = 1 / eCapacitance;
 	capArray->voltage = voltage;
 }

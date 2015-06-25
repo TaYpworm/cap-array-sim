@@ -8,12 +8,10 @@ class CapArraySystem
 	: public entityx::System<CapArraySystem> 
 {
 private:
-	entityx::Entity *_arrayEnt;
-
-	void updateCapArray();
+	entityx::Entity::Id _id;
 
 public:
-	explicit CapArraySystem(entityx::Entity& arrayEnt);
+	explicit CapArraySystem(entityx::Entity::Id arrayEntId);
 	void update(entityx::EntityManager& es, 
 		entityx::EventManager& events, 
 		entityx::TimeDelta dt) override;

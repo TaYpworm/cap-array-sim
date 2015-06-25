@@ -4,6 +4,6 @@
 #include "serialarray.hpp"
 #include <entityx/entityx.h>
 
-bool hasCap(const entityx::ComponentHandle<SerialArray>& array);
+bool hasCap(entityx::EntityManager &es, entityx::Entity::Id id);
 
 #endif

@@ -43,7 +43,7 @@ struct MaxwellK23400F
 // power > 0 = discharge
 // return < 0 = charge
 // return > 0 = discharge
-inline double calcCurrentFromPower(const Capacitor& cap, const double power, const double time)
+inline double calcCurrentFromPower(const Capacitor &cap, const double power, const double time)
 {
 	return -(power / cap.voltage) * sqrt(cap.minCapacitance * cap.voltage * cap.voltage) / \
 		(cap.minCapacitance * cap.voltage * cap.voltage - 2 * power * time);
@@ -51,7 +51,7 @@ inline double calcCurrentFromPower(const Capacitor& cap, const double power, con
 
 // current < 0 = charge
 // current > 0 = discharge
-inline double calcVoltageDelta(const Capacitor& cap, const double current, const double time)
+inline double calcVoltageDelta(const Capacitor &cap, const double current, const double time)
 {
 	return sqrt((cap.minCapacitance * cap.minCapacitance) / \
 		(4 * cap.diffusedEffectsCoef * cap.diffusedEffectsCoef) + \
@@ -63,14 +63,14 @@ inline double calcVoltageDelta(const Capacitor& cap, const double current, const
 	// Capacitor voltage can become negative, but should not be done for safety.
 }
 
-inline double calcCapacitance(const Capacitor& cap)
+inline double calcCapacitance(const Capacitor &cap)
 {
 	// C(u_c) = C_0 + k_c * u_c
 	// where k_c = diffused effects coefficient
 	return cap.minCapacitance + cap.diffusedEffectsCoef * cap.voltage; // Farads
 }
 
-inline double calcEnergy(const Capacitor& cap)
+inline double calcEnergy(const Capacitor &cap)
 {
 	// "Energetic" capacitance = C_e(u_c) = C_0 + 4/3 * k_c * u_c
 	return 0.5 * (cap.minCapacitance + 4 / 3 * cap.diffusedEffectsCoef * cap.voltage) * \

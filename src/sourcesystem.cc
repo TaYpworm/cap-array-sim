@@ -1,11 +1,15 @@
 #include "sourcesystem.hpp"
+#include <cassert>
 
-SourceSystem::SourceSystem() {
-
+ConstCurrentSourceSystem::ConstCurrentSourceSystem(entityx::Entity::Id sourceId) 
+{
+	assert(sourceId == entityx::Entity::INVALID);
+	_id = sourceId;
 }
 
-void SourceSystem::update(entityx::EntityManager &es,
+void ConstCurrentSourceSystem::update(entityx::EntityManager &es,
 		entityx::EventManager &events,
-		entityx::TimeDelta dt) {
+		entityx::TimeDelta dt) 
+{
 
 }
