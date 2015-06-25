@@ -7,13 +7,16 @@
 class CapArraySystem 
 	: public entityx::System<CapArraySystem> 
 {
+private:
+	entityx::Entity *_arrayEnt;
+
+	void updateCapArray();
+
 public:
-	explicit CapArraySystem(entityx::Entity& serialArray);
+	explicit CapArraySystem(entityx::Entity& arrayEnt);
 	void update(entityx::EntityManager& es, 
 		entityx::EventManager& events, 
 		entityx::TimeDelta dt) override;
 };
-
-bool hasCap(const entityx::ComponentHandle<SerialArray>& serialArray);
 
 #endif

@@ -3,9 +3,10 @@
 
 struct CapArray
 {
-	double capacitance;
+	double eCapacitance;
 	double esr;
 	double voltage;
+	int numCaps;
 };
 
 #endif
