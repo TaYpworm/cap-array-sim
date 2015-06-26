@@ -35,10 +35,10 @@ void CapArraySystem::update(entityx::EntityManager &es,
 		if (cap)
 		{
 			numCaps++;
-			esr += cap->esr;
+			esr += cap->getEsr();
 			// Equivalent capacitance of series-connected capacitors
-			eCapacitance += 1 / cap->capacitance; 
-			voltage += cap->voltage;
+			eCapacitance += 1 / cap->getCapacitance(); 
+			voltage += cap->getVoltage();
 		}
 	}
 
