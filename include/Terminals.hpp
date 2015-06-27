@@ -1,5 +1,5 @@
-#ifndef __TERMINAL_HPP__
-#define __TERMINAL_HPP__
+#ifndef __TERMINALS_HPP__
+#define __TERMINALS_HPP__
 
 struct Terminal 
 {

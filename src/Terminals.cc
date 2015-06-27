@@ -1,4 +1,4 @@
-#include "Terminal.hpp"
+#include "Terminals.hpp"
 
 Terminal::Terminal(int inId) 
 	: id(inId)

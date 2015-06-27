@@ -3,7 +3,8 @@
 #include "ConstCurrentSourceSystem.hpp"
 #include "SerialArray.hpp"
 
-ConstCurrentSourceSystem::ConstCurrentSourceSystem(entityx::Entity::Id sourceId) 
+ConstCurrentSourceSystem::ConstCurrentSourceSystem(entityx::Entity::Id sourceId, 
+	entityx::Entity::Id arrayId)
 {
 	assert(sourceId == entityx::Entity::INVALID);
 	_id = sourceId;
@@ -22,7 +23,7 @@ void ConstCurrentSourceSystem::update(entityx::EntityManager &es,
 		cap = es.get(id).component<Capacitor>();
 		if (cap)
 		{
-
+			cap->update()
 		}
 	}
 }

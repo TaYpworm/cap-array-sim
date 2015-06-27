@@ -5,32 +5,31 @@
 
 struct Capacitor 
 {
-	// Capacitance constants
+	// Capacitance
+	double capacitance;
 	double minCapacitance;
-	double meanCapacitance;
 	
-	// Current constants
+	// Current
 	double maxCurrent;
 	double leakageCurrent;
 
-	// Voltage constants
-	double ratedVoltage;
-	// Max voltage could be statistically modeled
-	double maxVoltage;
-	
-	// Resistance constants
-	double maxEsr;
-	double meanEsr;
-	
-	// Variables
-	double esr;
-	// Capacitance varies non-linearly with voltage
-	double capacitance;
-	double maxCapacitance;
+	// Voltage
 	double voltage;
+	// TODO: Max voltage could be statistically modeled
+	double maxVoltage;
+	double ratedVoltage;
+	
+	// Resistance
+	double esr;	
+	
 	// Coefficient that adds non-linear effects due to diffused layer
 	double diffusedEffectsCoef;
+
+	// Energy
 	double energy;
+
+	// Methods
+	void update(const double current, const double time);
 };
 
 struct MaxwellK23400F 

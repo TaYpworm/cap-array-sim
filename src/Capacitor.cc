@@ -5,6 +5,13 @@
 #include <stdexcept>
 #include "Capacitor.hpp"
 
+void Capacitor::update(const double current, const double time)
+{
+	voltage = calcVoltageDelta(*this, current, time);
+	capacitance = calcCapacitance(*this);
+	energy = calcEnergy(*this);
+}
+
 MaxwellK23400F::MaxwellK23400F(double startingVoltage) 
 {
 	// Set voltage
@@ -28,7 +35,7 @@ MaxwellK23400F::MaxwellK23400F(double startingVoltage)
 	// Statistical max will, in turn, be used to calc a new minimum based on diffused effects
 	// coefficient.
 	minCapacitance = 3400.0; // Farad
-	meanCapacitance = 3550.0; // Farad
+	double meanCapacitance = 3550.0; // Farad
 	// Difference between mean and min is 150F. Selecting this as 3*sigma.
 	// Sigma = 50F. Should establish sigma empirically.
 	// Generate random capacitance value.
@@ -36,7 +43,7 @@ MaxwellK23400F::MaxwellK23400F(double startingVoltage)
 	std::default_random_engine generator (seed);
 	std::normal_distribution<double> capDist (meanCapacitance, 
 		(meanCapacitance - minCapacitance) / 3.0);
-	maxCapacitance = capDist(generator); // Farad
+	double maxCapacitance = capDist(generator); // Farad
 	// Calculate minimum capacitance from diffused effects coefficient and max voltage.
 	// C(u_c) = C_0 + k_c * u_c
 	// C_0 = C(max_volt) - k_c * max_volt
@@ -49,12 +56,12 @@ MaxwellK23400F::MaxwellK23400F(double startingVoltage)
 	leakageCurrent = 0.018; // Amp
 
 	// Set resistance
-	maxEsr = 0.00028; // Ohms
-	meanEsr = 0.00022; // Ohms
+	double maxEsr = 0.00028; // Ohms
+	double meanEsr = 0.00022; // Ohms
 	// Difference between mean and min is 0.00006 Ohms. Selecting this as
 	// sigma.
 	// Generate random ESR value.
-	std::normal_distribution<double> esrDist (meanEsr, 6e-6);
+	std::normal_distribution<double> esrDist (meanEsr, maxEsr - meanEsr);
 	esr = esrDist(generator); // Ohms
 
 	// Set energy
