@@ -25,15 +25,17 @@ endif ()
 include_directories(${PROJECT_INCLUDE_DIR})
 
 # Source
-set (SOURCES ${PROJECT_SOURCE_DIR}/Capacitor.cc 
-	${PROJECT_SOURCE_DIR}/cap_array_sim.cc 
-	${PROJECT_SOURCE_DIR}/Terminals.cc 
-	${PROJECT_SOURCE_DIR}/CapArraySystem.cc 
+set (SOURCES
+	${PROJECT_SOURCE_DIR}/BalancerSystem.cc
+	${PROJECT_SOURCE_DIR}/CapArraySystem.cc
+	${PROJECT_SOURCE_DIR}/Capacitor.cc 
+	${PROJECT_SOURCE_DIR}/ClockSystem.cc 
 	${PROJECT_SOURCE_DIR}/ConstCurrentSourceSystem.cc 
 	${PROJECT_SOURCE_DIR}/DrainSystem.cc 
-	${PROJECT_SOURCE_DIR}/BalancerSystem.cc
 	${PROJECT_SOURCE_DIR}/Helpers.cc
-	${PROJECT_SOURCE_DIR}/Source.cc)
+	${PROJECT_SOURCE_DIR}/NetworkManager.cc
+	${PROJECT_SOURCE_DIR}/cap_array_sim.cc
+)
 
 # Libraries
 set (EXTRA_LIBS entityx)

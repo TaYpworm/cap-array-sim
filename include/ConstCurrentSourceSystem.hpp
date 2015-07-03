@@ -3,12 +3,10 @@
 
 #include <entityx/entityx.h>
 
-class ConstCurrentSourceSystem : public entityx::System<ConstCurrentSourceSystem> {
-private:
-	entityx::Entity::Id _id;
-
+class ConstCurrentSourceSystem : public entityx::System<ConstCurrentSourceSystem> 
+{
 public:
-	explicit ConstCurrentSourceSystem(entityx::Entity::Id sourceId);
+	explicit ConstCurrentSourceSystem();
 	void update(entityx::EntityManager &es,
 		entityx::EventManager &events,
 		entityx::TimeDelta dt) override;

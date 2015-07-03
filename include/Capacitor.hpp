@@ -2,61 +2,63 @@
 #define __CAPACITOR_HPP__
 
 #include <cmath>
+#include <entityx/entityx.h>
+#include "Types.hpp"
 
 struct Capacitor 
 {
 	// Capacitance
-	double capacitance;
-	double minCapacitance;
+	capacitance curCapacitance;
+	capacitance minCapacitance;
 	
 	// Current
-	double maxCurrent;
-	double leakageCurrent;
+	current maxCurrent;
+	current leakageCurrent;
 
 	// Voltage
-	double voltage;
+	voltage curVoltage;
 	// TODO: Max voltage could be statistically modeled
-	double maxVoltage;
-	double ratedVoltage;
+	voltage maxVoltage;
+	voltage ratedVoltage;
 	
 	// Resistance
-	double esr;	
+	resistance esr;	
 	
 	// Coefficient that adds non-linear effects due to diffused layer
 	double diffusedEffectsCoef;
 
 	// Energy
-	double energy;
+	energy curEnergy;
 
 	// Methods
-	void update(const double current, const double time);
+	void update(const current current, const entityx::TimeDelta dt);
 };
 
 struct MaxwellK23400F 
 	: public Capacitor
 {
-	MaxwellK23400F(double startingVoltage = 0);
+	MaxwellK23400F(voltage startingVoltage = 0);
 };
 
 // power < 0 = charge
 // power > 0 = discharge
 // return < 0 = charge
 // return > 0 = discharge
-inline double calcCurrentFromPower(const Capacitor &cap, const double power, const double time)
+inline double calcCurrentFromPower(const Capacitor &cap, const power inPower, const entityx::TimeDelta dt)
 {
-	return -(power / cap.voltage) * sqrt(cap.minCapacitance * cap.voltage * cap.voltage) / \
-		(cap.minCapacitance * cap.voltage * cap.voltage - 2 * power * time);
+	return -(inPower / cap.curVoltage) * sqrt(cap.minCapacitance * cap.curVoltage * cap.curVoltage) / \
+		(cap.minCapacitance * cap.curVoltage * cap.curVoltage - 2 * inPower * dt);
 }
 
 // current < 0 = charge
 // current > 0 = discharge
-inline double calcVoltageDelta(const Capacitor &cap, const double current, const double time)
+inline double calcVoltageDelta(const Capacitor &cap, const current inCurrent, const entityx::TimeDelta dt)
 {
 	return sqrt((cap.minCapacitance * cap.minCapacitance) / \
 		(4 * cap.diffusedEffectsCoef * cap.diffusedEffectsCoef) + \
 		(1 / cap.diffusedEffectsCoef) * \
-		(cap.voltage * cap.minCapacitance + \
-		cap.voltage * cap.voltage * cap.diffusedEffectsCoef - current * time)) - \
+		(cap.curVoltage * cap.minCapacitance + \
+		cap.curVoltage * cap.curVoltage * cap.diffusedEffectsCoef - inCurrent * dt)) - \
 		cap.minCapacitance / (2 * cap.diffusedEffectsCoef); // Volts
 
 	// Capacitor voltage can become negative, but should not be done for safety.
@@ -66,14 +68,14 @@ inline double calcCapacitance(const Capacitor &cap)
 {
 	// C(u_c) = C_0 + k_c * u_c
 	// where k_c = diffused effects coefficient
-	return cap.minCapacitance + cap.diffusedEffectsCoef * cap.voltage; // Farads
+	return cap.minCapacitance + cap.diffusedEffectsCoef * cap.curVoltage; // Farads
 }
 
 inline double calcEnergy(const Capacitor &cap)
 {
 	// "Energetic" capacitance = C_e(u_c) = C_0 + 4/3 * k_c * u_c
-	return 0.5 * (cap.minCapacitance + 4 / 3 * cap.diffusedEffectsCoef * cap.voltage) * \
-		cap.voltage * cap.voltage; // Joules
+	return 0.5 * (cap.minCapacitance + 4 / 3 * cap.diffusedEffectsCoef * cap.curVoltage) * \
+		cap.curVoltage * cap.curVoltage; // Joules
 }
 
 #endif

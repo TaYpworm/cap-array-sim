@@ -5,14 +5,14 @@
 #include <stdexcept>
 #include "Capacitor.hpp"
 
-void Capacitor::update(const double current, const double time)
+void Capacitor::update(const current current, const entityx::TimeDelta dt)
 {
-	voltage = calcVoltageDelta(*this, current, time);
-	capacitance = calcCapacitance(*this);
-	energy = calcEnergy(*this);
+	curVoltage = calcVoltageDelta(*this, current, dt);
+	curCapacitance = calcCapacitance(*this);
+	curEnergy = calcEnergy(*this);
 }
 
-MaxwellK23400F::MaxwellK23400F(double startingVoltage) 
+MaxwellK23400F::MaxwellK23400F(voltage startingVoltage) 
 {
 	// Set voltage
 	ratedVoltage = 2.85; // Volts
@@ -23,7 +23,7 @@ MaxwellK23400F::MaxwellK23400F(double startingVoltage)
 		message << "Starting voltage is out of range 0.." << maxVoltage << "V.";
 		throw std::out_of_range (message.str());
 	}
-	voltage = startingVoltage;
+	curVoltage = startingVoltage;
 
 	// Set diffused coefficient
 	// This value should be measured empirically for each capacitor.
